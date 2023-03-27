@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'ec2'
+    }
     environment {
         IMAGE_REPO_NAME="demo-repository"
         REPOSITORY_URI = "dhruv-garg/${IMAGE_REPO_NAME}"
@@ -7,7 +9,6 @@ pipeline {
     }
    
     stages {
-     node('slave') {
       stage('Building image') {
         steps{
 	  sh 'docker build -t dhruvgarg/demo-repository .'
@@ -25,7 +26,6 @@ pipeline {
  	  sh 'docker push dhruvgarg/demo-repository'
         }
       }      
-     }
     }
     post{
       always{
