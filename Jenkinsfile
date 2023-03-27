@@ -7,6 +7,7 @@ pipeline {
     }
    
     stages {
+     node('slave') {
       stage('Building image') {
         steps{
 	  sh 'docker build -t dhruvgarg/demo-repository .'
@@ -24,6 +25,7 @@ pipeline {
  	  sh 'docker push dhruvgarg/demo-repository'
         }
       }      
+     }
     }
     post{
       always{
