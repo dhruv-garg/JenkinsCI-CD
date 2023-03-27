@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'ec2'
-    }
+    agent any
     environment {
         IMAGE_REPO_NAME="demo-repository"
         REPOSITORY_URI = "dhruv-garg/${IMAGE_REPO_NAME}"
@@ -11,8 +9,10 @@ pipeline {
     stages {
       stage('Building image') {
         steps{
-	  sh 'docker build -t dhruvgarg/demo-repository .'
-        }
+	 node('ec2') {
+	    sh 'docker build -t dhruvgarg/demo-repository .'
+          }
+	}
       }
 
       stage('Loging to DockerHub') {
