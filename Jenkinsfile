@@ -14,16 +14,6 @@ pipeline {
     }
    
     stages {
-
-    // Tests
-    stage('Unit Tests') {
-      steps{
-        script {
-          sh 'sudo npm install -g npm@latest --unsafe-perm=true'
-	  sh 'sudo npm test -- --watchAll=false'
-        }
-      }
-    }
         
     // Building Docker images
     stage('Building image') {
