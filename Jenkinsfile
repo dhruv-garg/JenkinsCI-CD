@@ -1,16 +1,9 @@
 pipeline {
     agent any
     environment {
-        AWS_ACCOUNT_ID="430288206927"
-        AWS_DEFAULT_REGION="us-east-1" 
-	CLUSTER_NAME="demo"
-	SERVICE_NAME="demo-container-service"
-	TASK_DEFINITION_NAME="first-run-task-definition"
-	DESIRED_COUNT="1"
-        IMAGE_REPO_NAME="demo"
-        IMAGE_TAG="${env.BUILD_ID}"
-        REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
-	registryCredential = "demo-admin-user"
+        IMAGE_REPO_NAME="demo-repository"
+        REPOSITORY_URI = "dhruv-garg/${IMAGE_REPO_NAME}"
+	DOCKERHUB_CREDENTIALS=credentials('dockerhub')
     }
    
     stages {
@@ -18,33 +11,27 @@ pipeline {
     // Building Docker images
     stage('Building image') {
       steps{
-        script {
-          dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
-        }
+	sh 'docker build -t dhruvgarg/demo-repository .'
+      }
+    }
+
+    stage("Loging to DockerHub') {
+      steps{
+	sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'	
       }
     }
    
-    // Uploading Docker images into AWS ECR
-    stage('Pushing to ECR') {
-     steps{  
-         script {
-			docker.withRegistry("https://" + REPOSITORY_URI, "ecr:${AWS_DEFAULT_REGION}:" + registryCredential) {
-                    	dockerImage.push()
-                	}
-         }
-        }
-      }
-      
-    stage('Deploy') {
+    // Uploading Docker images into Docker Hub
+    stage('Pushing to Docker Hub') {
      steps{
-            withAWS(credentials: registryCredential, region: "${AWS_DEFAULT_REGION}") {
-                script {
-			sh './script.sh'
-                }
-            } 
-        }
-      }      
-      
+	sh 'docker push dhruvgarg/demo-repository'
+      }
+    }      
+  }
+  post{
+    always{
+       sh 'docker logout'
     }
+  }
 }
 
