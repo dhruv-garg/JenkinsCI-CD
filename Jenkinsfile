@@ -19,8 +19,8 @@ pipeline {
     stage('Unit Tests') {
       steps{
         script {
-          sh 'npm install -g npm@latest --unsafe-perm=true'
-	  sh 'npm test -- --watchAll=false'
+          sh 'sudo npm install -g npm@latest --unsafe-perm=true'
+	  sh 'sudo npm test -- --watchAll=false'
         }
       }
     }
