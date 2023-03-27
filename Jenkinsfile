@@ -7,31 +7,27 @@ pipeline {
     }
    
     stages {
-        
-    // Building Docker images
-    stage('Building image') {
-      steps{
-	sh 'docker build -t dhruvgarg/demo-repository .'
+      stage('Building image') {
+        steps{
+	  sh 'docker build -t dhruvgarg/demo-repository .'
+        }
       }
-    }
 
-    stage("Loging to DockerHub') {
-      steps{
-	sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'	
+      stage('Loging to DockerHub') {
+        steps{
+	  sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'	
+        }
       }
-    }
    
-    // Uploading Docker images into Docker Hub
-    stage('Pushing to Docker Hub') {
-     steps{
-	sh 'docker push dhruvgarg/demo-repository'
+      stage('Pushing to Docker Hub') {
+       steps{
+ 	  sh 'docker push dhruvgarg/demo-repository'
+        }
+      }      
+    }
+    post{
+      always{
+         sh 'docker logout'
       }
-    }      
-  }
-  post{
-    always{
-       sh 'docker logout'
     }
   }
-}
-
