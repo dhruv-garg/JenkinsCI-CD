@@ -1,2 +1,2 @@
-@Library('first-shared-lib') _
-welcomeJob 'Testing'
+@Library('first-shared-lib@test1') _
+testJob 'Testing'
