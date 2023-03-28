@@ -11,7 +11,7 @@ pipeline {
     stages {
       stage('Building image') {
         steps{
-	    sh 'echo $testVariable'
+	    sh 'echo ${testVariable}'
 	    sh 'docker build -t dhruvgarg/demo-repository .'
 	}
       }
