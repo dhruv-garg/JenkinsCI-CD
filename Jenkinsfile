@@ -1,3 +1,5 @@
+def testVariable="testvariable"
+
 pipeline {
     agent any
     environment {
@@ -9,9 +11,8 @@ pipeline {
     stages {
       stage('Building image') {
         steps{
-	 node('ec2') {
+	    sh 'echo $testVariable'
 	    sh 'docker build -t dhruvgarg/demo-repository .'
-          }
 	}
       }
 
