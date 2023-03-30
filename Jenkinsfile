@@ -7,13 +7,10 @@ pipeline {
 	stages {
 		stage('Initial'){
 			steps {
-				echo "${env.BRANCH_NAME}"
+				echo env.BRANCH_NAME
 			}
 		}
 		stage('PushDevDockerImage') {
-			when {
-				branch 'test-docker-dev'
-			}
 			steps {
 				buildDockerImage(username: "${params.Username}", project: "test-docker-dev")
 			}
