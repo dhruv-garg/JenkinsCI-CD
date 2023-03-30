@@ -7,7 +7,7 @@ pipeline {
 	stages {
 		stage('Initial'){
 			steps {
-				echo ${env.BRANCH_NAME}
+				echo "${env.BRANCH_NAME}"
 			}
 		}
 		stage('PushDevDockerImage') {
