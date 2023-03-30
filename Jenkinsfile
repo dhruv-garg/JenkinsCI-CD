@@ -1,2 +1,9 @@
-@Library('first-shared-lib@test2') _
-testJob 'Testing'
+@Library('first-shared-lib') _
+pipeline {
+	agent any
+	stages {
+		stage('Example') {
+			helloWorld(name:"Dhruv", dayOfWeek: "Thursday")
+		}
+	}
+}
