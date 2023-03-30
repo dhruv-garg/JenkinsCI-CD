@@ -2,7 +2,7 @@
 pipeline {
 	agent any
 	parameters {
-		string(name: 'Username', defaultValue: 'dhruvgarg', description: 'Value of DockerHub username'
+		string(name: 'Username', defaultValue: 'dhruvgarg', description: 'Value of DockerHub username')
 	}
 	stages {
 		stage('PushDevDockerImage') {
