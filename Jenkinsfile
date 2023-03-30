@@ -3,7 +3,9 @@ pipeline {
 	agent any
 	stages {
 		stage('Example') {
-			helloWorld(name:"Dhruv", dayOfWeek: "Thursday")
+			steps {
+				helloWorld(name:"Dhruv", dayOfWeek: "Thursday")
+			}
 		}
 	}
 }
