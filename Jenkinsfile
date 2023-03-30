@@ -10,7 +10,7 @@ pipeline {
 				branch 'test-docker-dev'
 			}
 			steps {
-				buildDockerImage(username: ${params.Username}, project: "test-docker-dev")
+				buildDockerImage(username: "${params.Username}", project: "test-docker-dev")
 			}
 		}
 		stage('PushProdDockerImage') {
@@ -18,7 +18,7 @@ pipeline {
 				branch 'test-docker-prod'
 			}
 			steps {
-				buildDockerImage(username: ${params.Username}, project: "test-docker-prod")
+				buildDockerImage(username: "${params.Username}", project: "test-docker-prod")
 			}
 		}
 	}
