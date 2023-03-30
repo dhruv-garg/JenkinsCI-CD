@@ -5,6 +5,11 @@ pipeline {
 		string(name: 'Username', defaultValue: 'dhruvgarg', description: 'Value of DockerHub username')
 	}
 	stages {
+		stage('Initial'){
+			steps {
+				echo '${env.BRANCH_NAME}'
+			}
+		}
 		stage('PushDevDockerImage') {
 			when {
 				branch 'test-docker-dev'
